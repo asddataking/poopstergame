@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poopster – Grow Your Poop Empire!</title>
+    <!-- Link to styles -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Google Fonts for playful typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Karla:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="gameContainer">
+      <!-- Header -->
+      <header class="header">
+        <h1 class="title">Poopster</h1>
+        <div class="scoreboard">
+          <div class="coins">
+            💰 <span id="coinCount">0</span>
+          </div>
+          <div class="poops">
+            💩 <span id="poopCount">0</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Game Area where poops and characters appear -->
+      <main id="gameArea" tabindex="0"></main>
+
+      <!-- Control Panel -->
+      <div id="controlPanel">
+        <div class="tab-buttons">
+          <button data-tab="upgrades" class="active">Upgrades</button>
+          <button data-tab="workers">Workers</button>
+          <button data-tab="zones">Zones</button>
+          <button data-tab="pets">Pets</button>
+          <button data-tab="settings">Settings</button>
+        </div>
+        <div class="tabs">
+          <!-- Upgrades Tab -->
+          <div id="tab-upgrades" class="tab active">
+            <h2>Tools &amp; Upgrades</h2>
+            <div class="upgrade-list" id="upgradeList"></div>
+          </div>
+          <!-- Workers Tab -->
+          <div id="tab-workers" class="tab">
+            <h2>Hire Workers</h2>
+            <div class="worker-list" id="workerList"></div>
+          </div>
+          <!-- Zones Tab -->
+          <div id="tab-zones" class="tab">
+            <h2>Unlock Zones</h2>
+            <div class="zone-list" id="zoneList"></div>
+          </div>
+          <!-- Pets Tab -->
+          <div id="tab-pets" class="tab">
+            <h2>Pets &amp; Characters</h2>
+            <div class="pet-list" id="petList"></div>
+          </div>
+          <!-- Settings Tab -->
+          <div id="tab-settings" class="tab">
+            <h2>Settings</h2>
+            <div class="settings-item">
+              <label>
+                <input type="checkbox" id="toggleSound" checked /> Toggle Sound
+              </label>
+            </div>
+            <div class="settings-item">
+              <label>
+                <input type="checkbox" id="toggleMusic" checked /> Toggle Music
+              </label>
+            </div>
+            <div class="settings-item">
+              <label>
+                <input type="checkbox" id="toggleKidMode" /> Kid‑Safe Mode
+              </label>
+            </div>
+            <div class="settings-item">
+              <button id="saveButton">Save Game</button>
+              <button id="loadButton">Load Game</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily Bonus Popup -->
+      <div id="dailyBonusPopup" class="hidden">
+        <div class="popup-content">
+          <h3>Daily Bonus!</h3>
+          <p>Here are some bonus coins for coming back!</p>
+          <button id="collectBonus">Collect Bonus</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background Music and Sounds -->
+    <!-- These audio tags reference local wav files stored in the assets/audio folder. They are simple sound
+         effects generated in the repository. Feel free to replace them with your own sound clips. -->
+    <audio id="bgMusic" loop preload="auto">
+      <source src="assets/audio/bgmusic.wav" type="audio/wav" />
+    </audio>
+    <audio id="soundPop" preload="auto">
+      <source src="assets/audio/collect.wav" type="audio/wav" />
+    </audio>
+    <audio id="soundHire" preload="auto">
+      <source src="assets/audio/hire.wav" type="audio/wav" />
+    </audio>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,277 @@
+/*
+ * Stylesheet for Poopster game
+ *
+ * This file defines the visual appearance of the game. The design uses bright,
+ * playful colors and rounded shapes to invoke a fun, cartoon‑like vibe similar
+ * to popular kid games. The typography combines a chunky display font for
+ * headings with a clean sans for body text.
+ */
+
+/* CSS Reset for margin/padding */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Karla', sans-serif;
+  overflow: hidden;
+  background: #f8f3e6;
+}
+
+#gameContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #ffeecf;
+  border-bottom: 4px solid #fdd275;
+}
+
+.title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: #7b4100;
+  text-shadow: 1px 2px #fcba03;
+}
+
+.scoreboard {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.3rem;
+  color: #7b4100;
+  align-items: center;
+}
+
+.scoreboard div {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Game Area */
+#gameArea {
+  flex-grow: 1;
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(#d4f4dd 0%, #c0e8c6 100%);
+  background-size: cover;
+  border-top: 4px solid #fdd275;
+  border-bottom: 4px solid #fdd275;
+}
+
+/* Entities (poops, workers, pets) */
+.entity {
+  position: absolute;
+  user-select: none;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  transition: transform 0.2s;
+}
+
+.entity.poop {
+  cursor: pointer;
+  animation: wiggle 1s infinite;
+}
+
+.entity.worker, .entity.pet {
+  pointer-events: none;
+}
+
+/* Wiggle animation for poops */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  75% { transform: rotate(-5deg); }
+}
+
+/* Control Panel */
+#controlPanel {
+  background-color: #fff4db;
+  padding: 0.5rem;
+  border-top: 4px solid #fdd275;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 0.5rem;
+}
+
+.tab-buttons button {
+  flex-grow: 1;
+  background: #ffe8a1;
+  border: none;
+  padding: 0.4rem 0.2rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #7b4100;
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  transition: background 0.2s;
+}
+
+.tab-buttons button.active {
+  background: #fcba03;
+  color: #7b4100;
+  box-shadow: 0 -2px 0 #7b4100 inset;
+}
+
+.tabs {
+  background: #fffaf3;
+  border: 2px solid #fcba03;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
+}
+
+/* Lists in control panel */
+.upgrade-list,
+.worker-list,
+.zone-list,
+.pet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.upgrade-item,
+.worker-item,
+.zone-item,
+.pet-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: 2px solid #fdd275;
+  border-radius: 6px;
+  padding: 0.4rem;
+  font-size: 0.85rem;
+  color: #7b4100;
+}
+
+.upgrade-item button,
+.worker-item button,
+.zone-item button,
+.pet-item button {
+  background: #fcba03;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #7b4100;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.upgrade-item button:disabled,
+.worker-item button:disabled,
+.zone-item button:disabled,
+.pet-item button:disabled {
+  background: #e0c77c;
+  cursor: not-allowed;
+}
+
+/* Settings items */
+.settings-item {
+  margin-bottom: 0.5rem;
+}
+
+.settings-item button {
+  margin-right: 0.5rem;
+  background: #fcba03;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #7b4100;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* Daily Bonus Popup */
+#dailyBonusPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+#dailyBonusPopup.hidden {
+  display: none;
+}
+
+.popup-content {
+  background: #fff;
+  border: 3px solid #fcba03;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  text-align: center;
+}
+
+.popup-content h3 {
+  font-family: 'Fredoka One', cursive;
+  margin-bottom: 0.5rem;
+  color: #7b4100;
+}
+
+.popup-content button {
+  background: #fcba03;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #7b4100;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.5rem;
+  }
+  .scoreboard {
+    font-size: 1rem;
+  }
+  .tab-buttons button {
+    font-size: 0.75rem;
+    padding: 0.3rem;
+  }
+  #gameArea {
+    font-size: 1.5rem;
+  }
+  .upgrade-item,
+  .worker-item,
+  .zone-item,
+  .pet-item {
+    font-size: 0.75rem;
+  }
+}
