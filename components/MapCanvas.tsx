@@ -29,6 +29,8 @@ export default function MapCanvas() {
       try {
         const kaboom = (await import('kaboom')).default
         
+        console.log('Initializing Kaboom with canvas:', canvasRef.current)
+        
         kaboomInstance = kaboom({
           canvas: canvasRef.current!,
           width: TOWN_CONFIG.GRID_WIDTH * VISUAL_CONFIG.TILE_SIZE,
@@ -37,12 +39,20 @@ export default function MapCanvas() {
           global: false,
         })
         
+        console.log('Kaboom instance created:', kaboomInstance)
+        
         // Load assets
-        kaboomInstance.loadSprite('van', '/assets/van.svg')
-        kaboomInstance.loadSprite('house_small', '/assets/house_small.svg')
-        kaboomInstance.loadSprite('house_medium', '/assets/house_medium.svg')
-        kaboomInstance.loadSprite('house_large', '/assets/house_large.svg')
-        kaboomInstance.loadSprite('pin', '/assets/pin.svg')
+        try {
+          console.log('Loading sprites...')
+          kaboomInstance.loadSprite('van', '/assets/van.svg')
+          kaboomInstance.loadSprite('house_small', '/assets/house_small.svg')
+          kaboomInstance.loadSprite('house_medium', '/assets/house_medium.svg')
+          kaboomInstance.loadSprite('house_large', '/assets/house_large.svg')
+          kaboomInstance.loadSprite('pin', '/assets/pin.svg')
+          console.log('All sprites loaded successfully')
+        } catch (error) {
+          console.error('Error loading sprites:', error)
+        }
         
         // Create scene
         kaboomInstance.scene('game', () => {
@@ -73,14 +83,19 @@ export default function MapCanvas() {
             const spriteName = `house_${house.tier.toLowerCase()}`
             const isSelected = selectedHouses.includes(house.id)
             
+            // Use colored rectangles instead of sprites
+            const houseColor = house.tier === 'LARGE' ? [0.8, 0.4, 0.2] : 
+                              house.tier === 'MEDIUM' ? [0.9, 0.7, 0.3] : 
+                              [0.6, 0.8, 0.4]
+            
             const houseObj = kaboomInstance.add([
-              kaboomInstance.sprite(spriteName),
+              kaboomInstance.rect(VISUAL_CONFIG.TILE_SIZE - 4, VISUAL_CONFIG.TILE_SIZE - 4),
               kaboomInstance.pos(
-                house.x * VISUAL_CONFIG.TILE_SIZE + VISUAL_CONFIG.TILE_SIZE / 2,
-                house.y * VISUAL_CONFIG.TILE_SIZE + VISUAL_CONFIG.TILE_SIZE / 2
+                house.x * VISUAL_CONFIG.TILE_SIZE + 2,
+                house.y * VISUAL_CONFIG.TILE_SIZE + 2
               ),
-              kaboomInstance.scale(0.8),
-              kaboomInstance.origin('center'),
+              kaboomInstance.color(...houseColor),
+              kaboomInstance.origin('topleft'),
               {
                 id: house.id,
                 tier: house.tier,
@@ -93,14 +108,13 @@ export default function MapCanvas() {
             // Add selection indicator
             if (isSelected) {
               kaboomInstance.add([
-                kaboomInstance.sprite('pin'),
+                kaboomInstance.circle(6),
                 kaboomInstance.pos(
                   house.x * VISUAL_CONFIG.TILE_SIZE + VISUAL_CONFIG.TILE_SIZE / 2,
                   house.y * VISUAL_CONFIG.TILE_SIZE - 5
                 ),
-                kaboomInstance.scale(0.6),
-                kaboomInstance.origin('center'),
                 kaboomInstance.color(0, 1, 0),
+                kaboomInstance.origin('center'),
               ])
             }
             
@@ -138,12 +152,12 @@ export default function MapCanvas() {
             })
           })
           
-          // Van (only show during route)
+          // Van (only show during route) - use colored rectangle instead of sprite
           if (isDayActive && currentRoute) {
             const van = kaboomInstance.add([
-              kaboomInstance.sprite('van'),
+              kaboomInstance.rect(24, 16),
               kaboomInstance.pos(0, 0),
-              kaboomInstance.scale(0.8),
+              kaboomInstance.color(0.2, 0.4, 0.8),
               kaboomInstance.origin('center'),
               'van',
             ])

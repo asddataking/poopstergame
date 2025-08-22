@@ -1,7 +1,12 @@
 'use client'
 
 import GameRoot from '@/components/GameRoot'
+import ErrorBoundary from '@/components/ErrorBoundary'
 
 export default function Home() {
-  return <GameRoot />
+  return (
+    <ErrorBoundary>
+      <GameRoot />
+    </ErrorBoundary>
+  )
 }
