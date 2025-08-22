@@ -38,11 +38,11 @@ export default function MapCanvas() {
         })
         
         // Load assets
-        kaboomInstance.loadSprite('van', '/assets/van.png')
-        kaboomInstance.loadSprite('house_small', '/assets/house_small.png')
-        kaboomInstance.loadSprite('house_medium', '/assets/house_medium.png')
-        kaboomInstance.loadSprite('house_large', '/assets/house_large.png')
-        kaboomInstance.loadSprite('pin', '/assets/pin.png')
+        kaboomInstance.loadSprite('van', '/assets/van.svg')
+        kaboomInstance.loadSprite('house_small', '/assets/house_small.svg')
+        kaboomInstance.loadSprite('house_medium', '/assets/house_medium.svg')
+        kaboomInstance.loadSprite('house_large', '/assets/house_large.svg')
+        kaboomInstance.loadSprite('pin', '/assets/pin.svg')
         
         // Create scene
         kaboomInstance.scene('game', () => {
