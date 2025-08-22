@@ -19,10 +19,14 @@ npm run dev
 ## 🎮 Game Features
 
 ### Core Gameplay
-- **Plan Routes**: Select houses to service each day
-- **Execute Routes**: Drive around town collecting dog waste
-- **Manage Upgrades**: Improve your equipment and efficiency
-- **Track Progress**: Monitor your business growth
+- **Roblox-Style 3D World**: Immersive 3D environment with streets, houses, and backyards
+- **Street Navigation**: Start on the street and walk to houses you need to service
+- **Backyard Exploration**: Navigate through fenced backyards to find and scoop poops
+- **Poop Scooping Mechanics**: Press S key when close to poops to scoop them
+- **Scoring System**: Earn points based on poop size (Small: 10, Medium: 25, Large: 50)
+- **Dynamic Poop Respawn**: Poops respawn in random backyard locations after 8-20 seconds
+- **Full-Screen Immersion**: Game dashboard hidden by default, press TAB to toggle UI
+- **Minimap Navigation**: Visual minimap showing your position and house locations
 
 ### New Components Added
 
@@ -68,7 +72,8 @@ npm run dev
 ```
 components/
 ├── GameRoot.tsx          # Main game container
-├── MapCanvas.tsx         # Game map visualization
+├── ThreeJSMap.tsx        # 3D interactive map with walking and poop scooping
+├── MapCanvas.tsx         # Legacy 2D map (replaced by ThreeJSMap)
 ├── PlanTab.tsx           # Route planning interface
 ├── RouteTab.tsx          # Route execution interface
 ├── UpgradesTab.tsx       # Upgrade management
@@ -90,11 +95,18 @@ The game uses Zustand for state management with the following key areas:
 
 ## 🎯 How to Play
 
-1. **Start Your Day**: Select houses to service in the Plan tab
-2. **Execute Routes**: Drive to each house and collect waste
-3. **Manage Customers**: Keep customers happy to retain them
-4. **Upgrade Equipment**: Invest in better tools and vehicles
-5. **Grow Your Business**: Expand your customer base and profits
+1. **Start Your Day**: Click "Show Dashboard" and select houses to service in the Plan tab
+2. **Navigate the World**: Use WASD or Arrow keys to walk from the street to houses
+3. **Enter Backyards**: Walk through the green backyard areas to find poops
+4. **Scoop Poops**: Press S key when close to poops to scoop them and earn points
+5. **Manage Business**: Press TAB to toggle UI, access dashboard for upgrades and reports
+6. **Grow Your Empire**: Earn points, upgrade equipment, and expand your customer base
+
+### 🎮 Controls
+- **WASD / Arrow Keys**: Move around the 3D world
+- **S Key**: Scoop poop (when in backyard and close to poop)
+- **TAB**: Toggle game UI on/off
+- **ESC**: Close dashboard modal
 
 ## 🔧 Development
 

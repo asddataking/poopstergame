@@ -41,18 +41,8 @@ export default function MapCanvas() {
         
         console.log('Kaboom instance created:', kaboomInstance)
         
-        // Load assets
-        try {
-          console.log('Loading sprites...')
-          kaboomInstance.loadSprite('van', '/assets/van.svg')
-          kaboomInstance.loadSprite('house_small', '/assets/house_small.svg')
-          kaboomInstance.loadSprite('house_medium', '/assets/house_medium.svg')
-          kaboomInstance.loadSprite('house_large', '/assets/house_large.svg')
-          kaboomInstance.loadSprite('pin', '/assets/pin.svg')
-          console.log('All sprites loaded successfully')
-        } catch (error) {
-          console.error('Error loading sprites:', error)
-        }
+        // Skip sprite loading - using colored rectangles instead
+        console.log('Using colored rectangles instead of sprites')
         
         // Create scene
         kaboomInstance.scene('game', () => {
@@ -189,8 +179,18 @@ export default function MapCanvas() {
         
       } catch (error) {
         console.error('Failed to initialize Kaboom:', error)
+        console.error('Error details:', {
+          name: error instanceof Error ? error.name : 'Unknown',
+          message: error instanceof Error ? error.message : String(error),
+          stack: error instanceof Error ? error.stack : undefined
+        })
         // Fallback to simple canvas rendering
-        renderFallbackCanvas()
+        try {
+          renderFallbackCanvas()
+          setIsInitialized(true) // Mark as initialized even with fallback
+        } catch (fallbackError) {
+          console.error('Fallback canvas also failed:', fallbackError)
+        }
       }
     }
     

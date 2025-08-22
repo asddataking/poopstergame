@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/three": "^0.179.0",
+    "kaboom": "^3000.1.17",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "kaboom": "^3000.1.17",
+    "three": "^0.179.1",
     "zustand": "^4.4.7"
   },
   "devDependencies": {

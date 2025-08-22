@@ -5,7 +5,7 @@ import { useGameStore } from '@/lib/sim/state'
 import { generateTown, generateSampleCustomers } from '@/lib/sim/generateTown'
 import { planRoute } from '@/lib/sim/route'
 import { generateWeather } from '@/lib/sim/dayCycle'
-import MapCanvas from './MapCanvas'
+import ThreeJSMap from './ThreeJSMap'
 import PlanTab from './PlanTab'
 import RouteTab from './RouteTab'
 import UpgradesTab from './UpgradesTab'
@@ -19,6 +19,7 @@ type TabType = 'plan' | 'route' | 'upgrades' | 'reports' | 'settings'
 export default function GameRoot() {
   const [activeTab, setActiveTab] = useState<TabType>('plan')
   const [showEndDayModal, setShowEndDayModal] = useState(false)
+  const [showDashboard, setShowDashboard] = useState(false)
   
   const {
     day,
@@ -139,58 +140,17 @@ export default function GameRoot() {
         )}
       </div>
       
-      {/* Main Game Area */}
-      <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Map Canvas */}
-        <div className="lg:w-2/3 h-96 lg:h-auto">
-          <MapCanvas />
-        </div>
+      {/* Main Game Area - Full Screen 3D Map */}
+      <div className="flex-1 relative">
+        <ThreeJSMap />
         
-        {/* Right Panel */}
-        <div className="lg:w-1/3 bg-white border-l border-gray-200 flex flex-col">
-          {/* Tab Navigation */}
-          <div className="flex border-b border-gray-200 bg-gray-50">
-            {([
-              { id: 'plan', name: 'Plan', icon: '📋' },
-              { id: 'route', name: 'Route', icon: '🗺️' },
-              { id: 'upgrades', name: 'Upgrades', icon: '⚡' },
-              { id: 'reports', name: 'Reports', icon: '📊' },
-              { id: 'settings', name: 'Settings', icon: '⚙️' },
-            ] as const).map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center space-x-2 px-3 py-3 text-sm font-medium transition-colors ${
-                  activeTab === tab.id
-                    ? 'text-blue-600 border-b-2 border-blue-600 bg-white'
-                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
-                }`}
-              >
-                <span className="text-lg">{tab.icon}</span>
-                <span className="hidden sm:inline">{tab.name}</span>
-              </button>
-            ))}
-          </div>
-          
-          {/* Tab Content */}
-          <div className="flex-1 overflow-y-auto">
-            {activeTab === 'plan' && (
-              <PlanTab
-                onStartDay={handleStartDay}
-                canStartDay={selectedHouses.length > 0 && !isDayActive}
-              />
-            )}
-            {activeTab === 'route' && (
-              <RouteTab
-                onEndDay={handleEndDay}
-                canEndDay={isDayActive}
-              />
-            )}
-            {activeTab === 'upgrades' && <UpgradesTab />}
-            {activeTab === 'reports' && <ReportsTab />}
-            {activeTab === 'settings' && <SettingsPanel />}
-          </div>
-        </div>
+        {/* Floating Action Button to show dashboard */}
+        <button
+          onClick={() => setShowDashboard(true)}
+          className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-lg transition-colors z-10"
+        >
+          📋 Show Dashboard
+        </button>
       </div>
       
       {/* Bottom Action Bar */}
@@ -214,6 +174,72 @@ export default function GameRoot() {
         <EndDayModal
           onClose={() => setShowEndDayModal(false)}
         />
+      )}
+
+      {/* Dashboard Modal */}
+      {showDashboard && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            {/* Header */}
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-gray-800">Game Dashboard</h2>
+                <button
+                  onClick={() => setShowDashboard(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <span className="text-2xl">×</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Dashboard Content */}
+            <div className="p-6">
+              {/* Tab Navigation */}
+              <div className="flex border-b border-gray-200 bg-gray-50 mb-6">
+                {([
+                  { id: 'plan', name: 'Plan', icon: '📋' },
+                  { id: 'route', name: 'Route', icon: '🗺️' },
+                  { id: 'upgrades', name: 'Upgrades', icon: '⚡' },
+                  { id: 'reports', name: 'Reports', icon: '📊' },
+                  { id: 'settings', name: 'Settings', icon: '⚙️' },
+                ] as const).map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center space-x-2 px-4 py-3 text-sm font-medium transition-colors ${
+                      activeTab === tab.id
+                        ? 'text-blue-600 border-b-2 border-blue-600 bg-white'
+                        : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+                    }`}
+                  >
+                    <span className="text-lg">{tab.icon}</span>
+                    <span>{tab.name}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Tab Content */}
+              <div className="min-h-[400px]">
+                {activeTab === 'plan' && (
+                  <PlanTab
+                    onStartDay={handleStartDay}
+                    canStartDay={selectedHouses.length > 0 && !isDayActive}
+                  />
+                )}
+                {activeTab === 'route' && (
+                  <RouteTab
+                    onEndDay={handleEndDay}
+                    canEndDay={isDayActive}
+                  />
+                )}
+                {activeTab === 'upgrades' && <UpgradesTab />}
+                {activeTab === 'reports' && <ReportsTab />}
+                {activeTab === 'settings' && <SettingsPanel />}
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )
