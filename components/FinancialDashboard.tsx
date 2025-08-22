@@ -16,7 +16,6 @@ export default function FinancialDashboard() {
     cash,
     dailyEarnings,
     weeklyStats,
-    monthlyStats,
   } = useGameStore()
   
   const [timeframe, setTimeframe] = useState<'week' | 'month' | 'quarter'>('week')

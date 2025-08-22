@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { HOUSE_TIERS, UPGRADE_TYPES, GAME_CONFIG, TOWN_CONFIG } from '@/lib/constants'
+import { HOUSE_TIERS, UPGRADE_TYPES, UPGRADES, GAME_CONFIG, TOWN_CONFIG } from '@/lib/constants'
 
 // Types
 export interface House {
@@ -97,6 +97,9 @@ export interface GameState {
   updateCustomerService: (customerId: string, serviceDate: string) => void
   addCustomerNote: (customerId: string, note: string) => void
   churnCustomer: (customerId: string) => void
+  
+  // Internal game logic
+  processChurnAndLeads: () => void
 }
 
 // Initial state

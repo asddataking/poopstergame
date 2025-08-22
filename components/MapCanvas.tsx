@@ -9,7 +9,7 @@ import { TOWN_CONFIG, VISUAL_CONFIG, HOUSE_TIERS } from '@/lib/constants'
 let kaboomInstance: any = null
 
 export default function MapCanvas() {
-  const canvasRef = useRef<HTMLDivElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isInitialized, setIsInitialized] = useState(false)
   
   const {
@@ -257,10 +257,10 @@ export default function MapCanvas() {
   const renderFallbackCanvas = () => {
     if (!canvasRef.current) return
     
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
+    const ctx = canvasRef.current.getContext('2d')
     if (!ctx) return
     
+    const canvas = canvasRef.current
     canvas.width = TOWN_CONFIG.GRID_WIDTH * VISUAL_CONFIG.TILE_SIZE
     canvas.height = TOWN_CONFIG.GRID_HEIGHT * VISUAL_CONFIG.TILE_SIZE
     
@@ -309,14 +309,11 @@ export default function MapCanvas() {
       ctx.fillStyle = satisfactionColor
       ctx.fillRect(x + 6, y + size - 8, 20, 4)
     })
-    
-    canvasRef.current.innerHTML = ''
-    canvasRef.current.appendChild(canvas)
   }
   
   return (
     <div className="w-full h-full flex items-center justify-center bg-gray-100">
-      <div 
+      <canvas 
         ref={canvasRef}
         className="border border-gray-300 rounded-lg overflow-hidden"
         style={{
