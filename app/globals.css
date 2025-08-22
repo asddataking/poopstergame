@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Karla:wght@400;700&display=swap');
+
+@layer base {
+  html {
+    font-family: 'Karla', sans-serif;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+@layer components {
+  .game-button {
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .game-button-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .game-card {
+    @apply bg-white rounded-xl shadow-lg border border-gray-200 p-4;
+  }
+  
+  .game-tab {
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+  
+  .game-tab.active {
+    @apply bg-primary-500 text-white;
+  }
+  
+  /* Slider styles for settings */
+  .slider {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  
+  .slider::-webkit-slider-track {
+    @apply bg-gray-200 rounded-lg;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    @apply bg-blue-500 rounded-full w-5 h-5 shadow-md;
+  }
+  
+  .slider::-moz-range-track {
+    @apply bg-gray-200 rounded-lg;
+  }
+  
+  .slider::-moz-range-thumb {
+    @apply bg-blue-500 rounded-full w-5 h-5 border-0 shadow-md;
+  }
+  
+  /* Notification animations */
+  .notification-enter {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  
+  .notification-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 200ms, transform 200ms;
+  }
+  
+  .notification-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .notification-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 200ms, transform 200ms;
+  }
+}
+
+/* Custom scrollbar for mobile */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
